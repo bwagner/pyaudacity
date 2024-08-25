@@ -342,7 +342,7 @@ def import_audio(filename):
     if not os.path.exists(filename):
         raise PyAudacityException(str(filename) + " file not found.")
 
-    return do("ImportAudio")
+    return do(f'Import2: Filename="{filename}"')
 
 
 def import_labels():
