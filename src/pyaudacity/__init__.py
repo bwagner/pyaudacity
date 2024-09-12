@@ -282,8 +282,10 @@ def export(filename, num_channels=1):
     Audacity Documentation: Exports selected audio to a named file. This version of export has the full set of export options. However, a current limitation is that the detailed option settings are always stored to and taken from saved preferences. The net effect is that for a given format, the most recently used options for that format will be used. In the current implementation, NumChannels should be 1 (mono) or 2 (stereo).
     """
 
-    if not os.path.exists(filename):
-        raise PyAudacityException(str(filename) + " file not found.")
+    if not Path(filename).is_absolute():
+        raise PyAudacityException(str(filename) + " -- not an absolute path.  Please specify an absolute path for file storage or the file may end up an an unexpected directory.")
+    if Path(filename).exists():
+        raise PyAudacityException(str(filename) + " file already exists -- Audacity will not overwrite.")
     if not isinstance(num_channels, int):
         raise PyAudacityException(
             "num_channels argument must be a int, not" + str(type(num_channels))
